@@ -75,6 +75,7 @@ class CreateWindow(QtWidgets.QMainWindow):
                         image_names.append(file_name)
         except Exception:
             image_names = []
+        image_names.sort() #if everything works well, this should only run in folder mode.
         self.image_list = image_names
         self.image2file = file_dict
         return len(image_names)

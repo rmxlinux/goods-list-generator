@@ -6,6 +6,7 @@ from create_window_logic import CreateWindow
 from option_window_logic import OptionWindow
 from about_window_logic import AboutWindow
 from help_window_logic import HelpWindow
+from select_window_logic import SelectWindow
 import traceback
 import os
 
@@ -34,17 +35,18 @@ class MainWindow(QtWidgets.QMainWindow):
     def open_help_window(self):
         self.help_window = HelpWindow(parent=self)
         self.help_window.show()
+    def open_select_window(self):
+        self.select_window = SelectWindow(parent=self)
+        self.select_window.show()
 
     def open_folder(self):
         if self.is_edited:
             self.open_create_window(path=None, is_edited=self.is_edited)
             return
-        folder_path = QFileDialog.getExistingDirectory(self, "选择素材图片所在文件夹")
-        if(folder_path) :
-            self.open_create_window(path=folder_path, is_edited=self.is_edited)
-            self.is_edited = True
-            self.ui.Button_Create.setText('编辑')
-            self.ui.statusbar.showMessage('新建谷团成功，可以生成图片')
+        self.open_select_window()
+        self.is_edited = True
+        self.ui.Button_Create.setText('编辑')
+        self.ui.statusbar.showMessage('新建谷团成功，可以生成图片')
     def open_file(self):
         file_path, _ = QFileDialog.getOpenFileName(self, '选择谷团文件', '', '谷团数据文件 (*.flf)')
         if(file_path) :
